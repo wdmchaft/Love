@@ -1,0 +1,67 @@
+html {
+    background-color: #fd75b5;    
+}
+
+body {
+    font: 14px Helvetica,"Hiragino Sans GB","Hiragino Sans GB W3",Arial,sans-serif;
+	background-color: #fd75b5;
+    height: 100%;
+}
+
+.button {
+background: #222 url(overlay-button.png) repeat-x 0 0;
+display: inline-block;
+padding: 10px;
+color: white !important;
+font-size: 13px;
+font-weight: bold;
+line-height: 1;
+text-decoration: none;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+-webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.25);
+border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+
+cursor: pointer;
+overflow: visible;
+width: 100%;
+-webkit-animation-duration: 2s;
+-webkit-animation-iteration-count: infinite; 
+
+text-align:center;
+
+}
+
+.button_container {
+    width:150px;
+    margin:300px auto;
+}
+
+@-webkit-keyframes redPulse {
+          from { background-color: #bc330d; -webkit-box-shadow: 0 0 9px #E33100; }
+		  50% { background-color: #e33100; -webkit-box-shadow: 0 0 18px #e33100; }
+		  to { background-color: #bc330d; -webkit-box-shadow: 0 0 9px #E33100; }
+}
+
+
+.red.button {
+background-color: #E33100;
+-webkit-animation-name: redPulse; -webkit-animation-duration: 1s;
+}
+
+#maps_canvas {
+     width:100%; 
+     height:100%;
+}
+
+#curtain{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0px;
+    z-index: 99999;
+    background-color: #F0DADA;
+}

@@ -2,9 +2,46 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title> </title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <title>Love</title>
+        
+        <!--Google Maps API (´・ω・｀)-->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8K9XYu3rmFIXKb7c7HK9nEt6iTprXaSI&sensor=false"></script>
+        
+        <!---->
+        
+        <script type="text/javascript" src="js/screenfull.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/style.css" />
+        
     </head>
     <body>
+        <div class="button_container">
+            <a id="start_button" class="large red button">START</a>
+        </div>
+        <div id="map_canvas">jjj</div>
+        <div id="curtain"></div>
 
+  
+        <script type="text/javascript">
+            $("#start_button").click(function(){
+                if (screenfull.enabled) screenfull.request();
+                $(this).remove();
+                $(".button_container").remove();
+                init();
+            });
+            
+            
+            
+            function init() {
+                
+                map = new google.maps.Map(document.getElementById("map_canvas"), {
+                    center: new google.maps.LatLng(29.075375, 60.46875),
+                    zoom: 3,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+            }
+            
+        </script>
     </body>
 </html>
