@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
         <title>Love</title>
         
         <!--Google Maps API (´・ω・｀)-->
@@ -13,14 +13,16 @@
         <script type="text/javascript" src="js/screenfull.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <link rel="stylesheet" href="css/style.css" />
-        
+        <link href='http://fonts.googleapis.com/css?family=Ruthie' rel='stylesheet' type='text/css'>
+
     </head>
     <body>
         <div class="button_container">
             <a id="start_button" class="large red button">START</a>
         </div>
-        <div id="map_canvas">jjj</div>
+        <div id="map_canvas" style="width:100%; height:100%"></div>
         <div id="curtain"></div>
+        <div id="text" class="centered" ></div>
 
   
         <script type="text/javascript">
@@ -31,15 +33,175 @@
                 init();
             });
             
+            var map, marker_me, marker_you, marker_city;
             
+            var CHENGDU = new google.maps.LatLng(30.759244, 103.924973);
+            var JINAN = new google.maps.LatLng(36.645473, 117.069344);
+            var LINYI = new google.maps.LatLng(35.060445,118.349274);
+            var QINGDAO = new google.maps.LatLng(36.068666,120.383351);
+            //Ya: 43.98293394664122
+            //Za: 15.385814526184012
+            
+            //Ya: 43.977398403922734
+//Za: 15.371275152770947
+
+
+            var HEART_ISLAND = new google.maps.LatLng(43.96485856111049, 15.352431715545647);
+            
+            function smoothZoom(dest_zoom, callback){
+                callback = callback || function(){};
+
+                var now_zoom = map.getZoom();
+                if(now_zoom == dest_zoom){
+                    callback();
+                }
+                var increm = now_zoom < dest_zoom ? 1:-1;
+                var timeout = setInterval(function(){
+                    now_zoom += increm;
+                    map.setZoom(now_zoom);
+                    if(now_zoom == dest_zoom){
+                        clearTimeout(timeout);
+                        setTimeout(function(){
+                            callback();
+                        }, 1300);
+                    }
+                }, 1300);
+            }
+            
+            function showPhotos(){
+                
+            }
+            
+            function showHeartIsland() {
+                $("#text").slideToggle(2000, function(){
+                    marker_city.setMap(null);
+                    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);  
+                    smoothZoom(3, function(){
+                        map.panTo(HEART_ISLAND);
+                        smoothZoom(15, function(){
+                            map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                            setTimeout(function(){showPhotos()}, 2000);
+                        });
+                    });
+                            
+                });   
+            }
+            
+            
+            function showQINGDAO(){
+                $("#text").slideToggle(2000, function(){
+                    
+                marker_city.position = QINGDAO;
+                map.panTo(QINGDAO);
+                    $("#text").slideToggle(3000, function(){
+                        setTimeout(function(){showHeartIsland()}, 2000);    
+                          
+                    });
+            
+                });
+                 
+                
+                
+            }
+            
+            function showJINAN(){
+                $("#text").slideToggle(2000, function(){
+                    
+                    
+                    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+                
+                    smoothZoom(5, function(){
+                        map.panTo(JINAN); 
+                        marker_city.position = JINAN;
+                        smoothZoom(10, function(){
+                           map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                      
+                            $("#text").html("In those cities, we hung out...");
+                            $("#text").slideToggle(4000, function(){
+                              marker_city.setAnimation(google.maps.Animation.BOUNCE);
+                              setTimeout(function(){showQINGDAO()}, 2000);
+                            });
+
+                        });
+                    });
+                    
+                });
+                
+            }
+            
+            function showLINYI(){
+                
+                marker_city = new google.maps.Marker({ 
+                    position: LINYI,    
+                    title: "me", 
+                    icon: "http://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png",
+                    animation: google.maps.Animation.DROP,
+                    map: map 
+                });
+                
+                
+                map.panTo(LINYI);
+                smoothZoom(8, function(){
+                    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                    
+                    $("#text").html("In this city, we met...");
+                    $("#text").slideToggle(4000, function() {
+                        marker_city.setAnimation(google.maps.Animation.BOUNCE);
+                    
+                        setTimeout(function(){showJINAN()}, 2000);
+                        
+                    });
+                    
+
+                });
+                
+                
+            }
+            
+            function showHeartIsland(){
+                map.panTo(HEART_ISLAND);
+                smoothZoom(16, function(){
+                    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+                    setTimeout(function(){showPhotos()}, 2000);
+                });
+            }
             
             function init() {
                 
                 map = new google.maps.Map(document.getElementById("map_canvas"), {
-                    center: new google.maps.LatLng(29.075375, 60.46875),
-                    zoom: 3,
+                    center: new google.maps.LatLng(39.924482,116.405434),
+                    zoom: 4,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 });
+                
+                marker_me = new google.maps.Marker({ 
+                    position: CHENGDU,    
+                    title: "me", 
+                    icon: "http://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png",
+                    animation: google.maps.Animation.DROP,
+                    map: map 
+                });
+                
+                marker_you = new google.maps.Marker({ 
+                    position: JINAN, 
+                    title: "you", 
+                    icon: "http://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png",
+                    animation: google.maps.Animation.DROP,
+                    map: map 
+                });
+                
+                setTimeout(function(){
+                    showHeartIsland();
+                }, 4000);
+                
+                //marker_me.setAnimation(google.maps.Animation.BOUNCE);
+                //marker_you.setAnimation(google.maps.Animation.BOUNCE);
+                
+                /*setTimeout(function(){
+                    showLINYI();
+                }, 4000);*/
+                
+                
             }
             
         </script>
