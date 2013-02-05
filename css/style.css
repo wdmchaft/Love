@@ -80,3 +80,7 @@ background-color: #E33100;
     margin-left: -150px;
     font-family: 'Ruthie', cursive;
 }
+
+#map_canvas { 
+    height: 100% 
+}
